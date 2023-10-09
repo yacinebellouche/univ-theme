@@ -13,9 +13,12 @@ function univ_files()
 }
 add_action('wp_enqueue_scripts', 'univ_files');
 function university_features()
-{   
-    register_nav_menu( 'footerLocationLearn', 'Footer Menu Learn' );
-    register_nav_menu( 'footerLocationExplore', 'Footer Menu Explore' );
+{
+    register_nav_menu('footerLocationLearn', 'Footer Menu Learn');
+    register_nav_menu('footerLocationExplore', 'Footer Menu Explore');
     add_theme_support('title-tag');
 }
 add_action('after_setup_theme', 'university_features');
+
+
+
