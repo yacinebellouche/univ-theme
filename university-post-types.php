@@ -16,8 +16,6 @@ function university_post_types()
             'all_items' => 'All Events',
             'singular_name' => 'Event'
         ),
-
-
     ));
 }
 
