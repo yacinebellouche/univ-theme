@@ -17,12 +17,13 @@ get_header();
     <?php
     while (have_posts()) {
         the_post();
+        $eventDate = new DateTime(get_field('event_date'));
     ?>
 
 <div class="event-summary">
           <a class="event-summary__date t-center" href="<?= the_permalink() ?>">
-            <span class="event-summary__month"><?= the_time('M') ?></span>
-            <span class="event-summary__day"><?= the_time('d') ?></span>
+            <span class="event-summary__month"><?= $eventDate->format('M') ?></span>
+            <span class="event-summary__day"><?= $eventDate->format('d') ?></span>
           </a>
           <div class="event-summary__content">
             <h5 class="event-summary__title headline headline--tiny"><a href="<?= the_permalink() ?>"><?= the_title() ?></a></h5>
