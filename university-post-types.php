@@ -3,6 +3,7 @@
 
 function university_post_types()
 {
+    // Event post type
     register_post_type('event', array(
         'rewrite'=>array('slug'=>'events'),
         'supports'=>array('excerpt','title','editor'),
@@ -18,6 +19,25 @@ function university_post_types()
             'singular_name' => 'Event'
         ),
     ));
+    //Program post tyoe
+    register_post_type('program', array(
+        'rewrite'=>array('slug'=>'programs'),
+        'supports'=>array('title','editor'),
+        'has_archive'=>true,
+        'public' => true,
+        'menu_icon' => 'dashicons-awards',
+        'show_in_rest'=> true,
+        'labels' => array(
+            'name'=>'Programs',
+            'add_new_item' =>'Add New Program',
+            'edit_item' => 'Edit Program',
+            'all_items' => 'All Programs',
+            'singular_name' => 'Program'
+        ),
+    ));
+
+
+
 }
 
 

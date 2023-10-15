@@ -6,8 +6,7 @@ get_header();
     <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg') ?>);"></div>
     <div class="page-banner__content container container--narrow">
         <h1 class="page-banner__title">
-            <?php the_archive_title();
-            ?></h1>
+            All Events</h1>
         <div class="page-banner__intro">
             <p><?= the_archive_description() ?></p>
         </div>
@@ -15,6 +14,7 @@ get_header();
 </div>
 <div class="container container--narrow page-section">
     <?php
+    
     while (have_posts()) {
         the_post();
         $eventDate = new DateTime(get_field('event_date'));
@@ -35,6 +35,9 @@ get_header();
     }
     echo paginate_links();
     ?>
+
+    <hr class='section-break'>
+    <p> How about you check the previous <a href="<?= site_url("/past-events")?>" > Events ? </a> </p>
 
 </div>
 
