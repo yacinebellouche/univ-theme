@@ -26,6 +26,32 @@ get_header();
         <p> <?= the_content() ?> </p>
     </div>
     <?php
+
+    $professors = new WP_Query(array(
+        'posts_per_page' => -1,
+        'post_type' => 'professor',
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'meta_query' => array(
+            array(
+                'key' => 'related_program',
+                'compare' => 'LIKE',
+                'value' => '"' . get_the_ID() . '"'
+            )
+        )
+    ));
+    if ($professors->have_posts()) {
+        echo "<hr class='section-break' >";
+        echo '<h2 class="headline headline--medium" >' . get_the_title() . ' Professors </h2>';
+
+        while ($professors->have_posts()) {
+            $professors->the_post();
+    ?>
+            <li><a href="<?= the_permalink() ?>"><?= the_title() ?></a></li>
+        <?php
+        }
+    }
+    wp_reset_postdata();
     $homepageEvents = new WP_Query(array(
         'posts_per_page' => 2,
         'post_type' => 'event',
@@ -53,7 +79,7 @@ get_header();
         while ($homepageEvents->have_posts()) {
             $homepageEvents->the_post();
             $eventDate = new DateTime(get_field('event_date'));
-    ?>
+        ?>
             <div class="event-summary">
                 <a class="event-summary__date t-center" href="<?= the_permalink() ?>">
                     <span class="event-summary__month"><?= $eventDate->format('M') ?></span>
