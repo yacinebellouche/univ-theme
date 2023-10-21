@@ -37,7 +37,7 @@ function university_post_types()
     ));
     //professor post type
     register_post_type('professor', array(
-        'supports' => array('title', 'editor'),
+        'supports' => array('title', 'editor','thumbnail'),
         'public' => true,
         'menu_icon' => 'dashicons-businessperson',
         'show_in_rest' => true,

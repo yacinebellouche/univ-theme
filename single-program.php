@@ -43,13 +43,19 @@ get_header();
     if ($professors->have_posts()) {
         echo "<hr class='section-break' >";
         echo '<h2 class="headline headline--medium" >' . get_the_title() . ' Professors </h2>';
-
+        echo "<ul class='professor-cards'>";
         while ($professors->have_posts()) {
             $professors->the_post();
     ?>
-            <li><a href="<?= the_permalink() ?>"><?= the_title() ?></a></li>
+            <li class='professor-card__list-item'>
+                <a class="professor-card" href="<?= the_permalink() ?>">
+                    <img class="professor-card__image" src="<?= the_post_thumbnail_url() ?>">
+                    <span class="professor-card__name"><?= the_title() ?></span>
+                </a>
+            </li>
         <?php
         }
+        echo "</ul>";
     }
     wp_reset_postdata();
     $homepageEvents = new WP_Query(array(
