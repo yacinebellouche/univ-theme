@@ -37,7 +37,7 @@ function university_post_types()
     ));
     //professor post type
     register_post_type('professor', array(
-        'supports' => array('title', 'editor','thumbnail'),
+        'supports' => array('title', 'editor', 'thumbnail'),
         'public' => true,
         'menu_icon' => 'dashicons-businessperson',
         'show_in_rest' => true,
@@ -47,6 +47,21 @@ function university_post_types()
             'edit_item' => 'Edit Professor',
             'all_items' => 'All Professor',
             'singular_name' => 'Professor'
+        ),
+    ));
+    //Campus post type
+    register_post_type('campus', array(
+        'rewrite' => array('slug' => 'campuses'),
+        'supports' => array('title', 'editor', 'excerpt'),
+        'public' => true,
+        'menu_icon' => 'dashicons-location-alt',
+        'show_in_rest' => true,
+        'labels' => array(
+            'name' => 'Campuses',
+            'add_new_item' => 'Add New Campus',
+            'edit_item' => 'Edit Campus',
+            'all_items' => 'All Campus',
+            'singular_name' => 'Campus'
         ),
     ));
 }
