@@ -49,21 +49,7 @@ function university_post_types()
             'singular_name' => 'Professor'
         ),
     ));
-    //Campus post type
-    register_post_type('campus', array(
-        'rewrite' => array('slug' => 'campuses'),
-        'supports' => array('title', 'editor', 'excerpt'),
-        'public' => true,
-        'menu_icon' => 'dashicons-location-alt',
-        'show_in_rest' => true,
-        'labels' => array(
-            'name' => 'Campuses',
-            'add_new_item' => 'Add New Campus',
-            'edit_item' => 'Edit Campus',
-            'all_items' => 'All Campus',
-            'singular_name' => 'Campus'
-        ),
-    ));
+
 }
 
 
