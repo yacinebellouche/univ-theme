@@ -106,17 +106,34 @@ class Search {
     this.openButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".js-search-trigger");
     this.closeButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".search-overlay__close");
     this.searchOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".search-overlay");
+    this.searchField = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-term");
+    this.resultsDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-overlay__results");
     this.eventns();
     this.isOverlayOpen = false;
+    this.isSpinnerVisible = false;
+    this.typingTimer;
   }
   // 2. events
   eventns() {
     this.openButton.on("click", this.openOverlay.bind(this));
     this.closeButton.on("click", this.closeOverlay.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on("keydown", this.keyPressDispatcher.bind(this));
+    this.searchField.on("keydown", this.typingLogic.bind(this));
   }
 
   // 3. methods
+  typingLogic() {
+    clearTimeout(this.typingTimer);
+    if (!this.isSpinnerVisible) {
+      this.resultsDiv.html('<div class="spinner-loader"></div>');
+      this.isSpinnerVisible = true;
+    }
+    this.typingTimer = setTimeout(getResults, 2000);
+  }
+  getResults() {
+    this.resultsDiv.html("haha");
+    this.isSpinnerVisible = false;
+  }
   openOverlay() {
     this.searchOverlay.addClass("search-overlay--active");
     jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").addClass("body-no-scroll");

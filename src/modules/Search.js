@@ -5,35 +5,51 @@ class Search {
     this.openButton = $(".js-search-trigger");
     this.closeButton = $(".search-overlay__close");
     this.searchOverlay = $(".search-overlay");
+    this.searchField = $("#search-term");
+    this.resultsDiv = $("#search-overlay__results");
     this.eventns();
     this.isOverlayOpen = false;
+    this.isSpinnerVisible = false;
+    this.typingTimer;
   }
   // 2. events
   eventns() {
     this.openButton.on("click", this.openOverlay.bind(this));
     this.closeButton.on("click", this.closeOverlay.bind(this));
-    $(document).on("keydown",this.keyPressDispatcher.bind(this))
+    $(document).on("keydown", this.keyPressDispatcher.bind(this));
+    this.searchField.on("keydown", this.typingLogic.bind(this));
   }
 
   // 3. methods
+  typingLogic() {
+    clearTimeout(this.typingTimer);
+    if (!this.isSpinnerVisible) {
+      this.resultsDiv.html('<div class="spinner-loader"></div>');
+      this.isSpinnerVisible = true;
+    }
+    this.typingTimer = setTimeout(getResults, 2000);
+  }
+  getResults() {
+    this.resultsDiv.html("haha");
+    this.isSpinnerVisible = false;
+  }
   openOverlay() {
-   this.searchOverlay.addClass("search-overlay--active");
-   $("body").addClass("body-no-scroll");
-   this.isOverlayOpen = true;
+    this.searchOverlay.addClass("search-overlay--active");
+    $("body").addClass("body-no-scroll");
+    this.isOverlayOpen = true;
   }
   closeOverlay() {
     this.searchOverlay.removeClass("search-overlay--active");
     $("body").removeClass("body-no-scroll");
     this.isOverlayOpen = true;
-}
-keyPressDispatcher(e){
-    if(e.keyCode==83 && !this.isOverlayOpen){
-        this.openOverlay();
+  }
+  keyPressDispatcher(e) {
+    if (e.keyCode == 83 && !this.isOverlayOpen) {
+      this.openOverlay();
     }
-    if(e.keyCode==27 && this.isOverlayOpen){
-        this.closeOverlay();
+    if (e.keyCode == 27 && this.isOverlayOpen) {
+      this.closeOverlay();
     }
-
-}
+  }
 }
 export default Search;
