@@ -108,6 +108,7 @@ class Search {
     this.searchOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".search-overlay");
     this.searchField = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-term");
     this.resultsDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#search-overlay__results");
+    this.previousValue;
     this.eventns();
     this.isOverlayOpen = false;
     this.isSpinnerVisible = false;
@@ -118,21 +119,33 @@ class Search {
     this.openButton.on("click", this.openOverlay.bind(this));
     this.closeButton.on("click", this.closeOverlay.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on("keydown", this.keyPressDispatcher.bind(this));
-    this.searchField.on("keydown", this.typingLogic.bind(this));
+    this.searchField.on("keyup", this.typingLogic.bind(this));
   }
-
   // 3. methods
   typingLogic() {
-    clearTimeout(this.typingTimer);
-    if (!this.isSpinnerVisible) {
-      this.resultsDiv.html('<div class="spinner-loader"></div>');
-      this.isSpinnerVisible = true;
+    if (this.searchField.val() != this.previousValue) {
+      clearTimeout(this.typingTimer);
+      if (this.searchField.val()) {
+        if (!this.isSpinnerVisible) {
+          this.resultsDiv.html('<div class="spinner-loader"></div>');
+          this.isSpinnerVisible = true;
+        }
+        this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+      } else {
+        this.resultsDiv.html("");
+        this.isSpinnerVisible = false;
+      }
     }
-    this.typingTimer = setTimeout(getResults, 2000);
+    this.previousValue = this.searchField.val();
   }
   getResults() {
-    this.resultsDiv.html("haha");
-    this.isSpinnerVisible = false;
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON("http://university.local/wp-json/wp/v2/posts?search=" + this.searchField.val(), data => {
+      this.resultsDiv.html(`<h2 class='search-overlay__section-title'> General Information</h2>
+            <ul class='link-list min-list' >
+            <li><a href='${data[0].link}'>${data[0].title.rendered}</a></li>
+            
+            </ul>`);
+    });
   }
   openOverlay() {
     this.searchOverlay.addClass("search-overlay--active");
@@ -145,7 +158,7 @@ class Search {
     this.isOverlayOpen = true;
   }
   keyPressDispatcher(e) {
-    if (e.keyCode == 83 && !this.isOverlayOpen) {
+    if (e.keyCode == 83 && !this.isOverlayOpen && !jquery__WEBPACK_IMPORTED_MODULE_0___default()("input, textarea").is(":focus")) {
       this.openOverlay();
     }
     if (e.keyCode == 27 && this.isOverlayOpen) {
