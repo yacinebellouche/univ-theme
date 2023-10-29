@@ -1,5 +1,6 @@
 <?php
 
+require get_theme_file_path('/inc/search-route.php');
 
 
 function pageBanner($args = NULL)
@@ -30,6 +31,16 @@ function pageBanner($args = NULL)
 <?php
 }
 
+function univ_custom_rest()
+{
+    register_rest_field('post', 'authorName', array(
+        'get_callback' => function () {
+            return get_the_author();
+        }
+    ));
+}
+add_action('rest_api_init', 'univ_custom_rest');
+
 
 
 function univ_files()
@@ -39,6 +50,11 @@ function univ_files()
     wp_enqueue_style('univ_extra_style', get_theme_file_uri('/build/index.css'));
     wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+
+
+    wp_localize_script('index-main-js', 'univData', array(
+        'root_url' => get_site_url(),
+    ));
 }
 add_action('wp_enqueue_scripts', 'univ_files');
 function university_features()

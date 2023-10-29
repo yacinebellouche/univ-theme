@@ -37,6 +37,7 @@ function university_post_types()
     ));
     //professor post type
     register_post_type('professor', array(
+        'show_in_rest' => true,
         'supports' => array('title', 'editor', 'thumbnail'),
         'public' => true,
         'menu_icon' => 'dashicons-businessperson',
@@ -49,7 +50,6 @@ function university_post_types()
             'singular_name' => 'Professor'
         ),
     ));
-
 }
 
 
