@@ -80,11 +80,20 @@ class Search {
       <h2 class='search-overlay__section-title'> Professors </h2>
       ${
         results["professors"].length
-          ? '<ul class="link-list min-list" >'
-          : `<p>No events match that search. <a href='${univData.root_url}/professors'> View All events</a></p>`
+          ? '<ul class="professor-cards" >'
+          : `<p>No professors match that search.</p>`
       } 
       ${results["professors"]
-        .map((item) => `<li><a href='${item.permalink}'>${item.title}</a></li>`)
+        .map(
+          (item) => `
+        <li class='professor-card__list-item'>
+        <a class="professor-card" href="${item.permalink}">
+            <img class="professor-card__image" src="${item.thumbnail}">
+            <span class="professor-card__name">${item.title}</span>
+        </a>
+    </li>   
+        `
+        )
         .join("")}
         ${results["professors"].length ? "</ul>" : ""}  
       </div>
@@ -92,18 +101,31 @@ class Search {
       <h2 class='search-overlay__section-title'> Events </h2>
       ${
         results["events"].length
-          ? '<ul class="link-list min-list" >'
+          ? ''
           : `<p>No events match that search. <a href='${univData.root_url}/events'> View All events</a></p>`
       } 
       ${results["events"]
-        .map((item) => `<li><a href='${item.permalink}'>${item.title}</a></li>`)
+        .map((item) => ` 
+        <div class="event-summary">
+        <?php $eventDate = new DateTime(get_field('event_date'));?>
+        <a class="event-summary__date t-center" href="${item.permalink}">
+            <span class="event-summary__month">${item.month}</span>
+            <span class="event-summary__day">${item.day}</span>
+        </a>
+        <div class="event-summary__content">
+            <h5 class="event-summary__title headline headline--tiny"><a href="${item.permalink}">${item.title}</a></h5>
+            <p>${item.description}<a href="${item.permalink}" class="nu gray">Learn more</a></p>
+        </div>
+    </div>`)
         .join("")}
-        ${results["events"].length ? "</ul>" : ""}  
+        ${results["events"].length ? "" : ""}  
       </div>
       </div>`);
         this.isSpinnerVisible = false;
       }
     );
+
+
   }
   openOverlay() {
     this.searchOverlay.addClass("search-overlay--active");
