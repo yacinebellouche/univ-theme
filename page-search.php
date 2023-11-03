@@ -39,7 +39,7 @@ while (have_posts()) {
             </div>
         <?php } ?>
         <div class="generic-content">
-            <?= the_content() ?>
+            <?php get_search_form(); ?> 
         </div>
     </div>
 <?php

@@ -11,7 +11,7 @@ pageBanner();
                 the_title() ?></span></p>
     </div>
     <div class="generic-content">
-        <p> <?= the_content() ?> </p>
+        <p> <?= the_field('main_body_content') ?> </p>
     </div>
     <?php
 
@@ -72,7 +72,7 @@ pageBanner();
 
         while ($homepageEvents->have_posts()) {
             $homepageEvents->the_post();
-            get_template_part('template-parts/event');
+            get_template_part('template-parts/content-event');
         }
     }
 
